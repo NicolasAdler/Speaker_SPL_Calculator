@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #define PI 3.14159265358979
 #define RHO 1.225
@@ -11,212 +12,24 @@ class TS_Parameters
 	double Vas, Mms, Cms, Kms, fs, Qts, Qes, Qms, Sd, Xmax, Sensitivity, Re;
 
 	public:
-	void set_Vas(float _Vas);
-	void set_Vas(float _Sd, float _Cms);
+	void set_Vas(double _Vas);
+	void set_Vas(double _Sd, double _Cms);
 	double get_Vas();
 	
-	void set_Mms(float _Mms);
-	void set_Mms(float _fs, float _Cms);
+	void set_Mms(double _Mms);
+	void set_Mms(double _fs, double _Cms);
 	double get_Mms();
 
-	void set_Cms(float _Cms);
-	void set_Cms(float _Vas, float _Sd);
+	void set_Cms(double _Cms);
+	void set_Cms(double _Vas, double _Sd);
 	double get_Cms();
 	
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
-	//void set_();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//void set_Vas();
-	/*
-	void TS_Parameters::set_()
-	{
-		
-	}
-	*/
-	//float get_();
-	/*
-	void TS_Parameters::get_()
-	{
-		
-	}
-	*/
+	void set_Kms(float _Kms);
+	void set_Kms(double _Cms);
+	double get_Kms();
+
+	void set_fs(double _fs);
+	void set_fs(double _Cms, double _Mms);
+	double get_fs();
 	
 };
