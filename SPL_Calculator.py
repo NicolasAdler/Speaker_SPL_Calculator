@@ -1,8 +1,9 @@
 from tkinter import *
+import tkinter as tk
 
 
 window = Tk() 
-window.geometry("300x600")
+window.geometry("300x500")
 window.title("SPL Calculator")
 
 Label(window, text="Vas: ").pack()
@@ -14,5 +15,26 @@ entry.pack()
 Label(window, text="Qts: ").pack()
 entry = Entry(window)
 entry.pack()
+Label(window, text="Qes: ").pack()
+entry = Entry(window)
+entry.pack()
+Label(window, text="Qms: ").pack()
+entry = Entry(window)
+entry.pack()
+Label(window, text="Xmax: ").pack()
+entry = Entry(window)
+entry.pack()
+Label(window, text="Sd: ").pack()
+entry = Entry(window)
+entry.pack()
+Label(window, text="Sensitivity: ").pack()
+entry = Entry(window)
+entry.pack()
+Label(window, text="Re: ").pack()
+entry = Entry(window)
+entry.pack()
+
+Button(window, text="ON").pack()
+#turn_on.pack()
 
 window.mainloop()

@@ -48,7 +48,7 @@
 	{
 		this->Kms = _Kms;
 	}
-	void TS_Parameters::set_Kms(double _Cms)
+	void TS_Parameters::set_Kms_with_Cms(double _Cms)
 	{
 		this->Kms = 1 / _Cms;
 	}
@@ -90,7 +90,7 @@
 	{
 		this->Sd = _Sd;
 	}
-	void TS_Parameters::set_Sd(double cone_diameter)
+	void TS_Parameters::set_Sd_with_cone_diameter(double cone_diameter)
 	{
 		this->Sd = (PI/4.0) * (cone_diameter * cone_diameter);
 	}
