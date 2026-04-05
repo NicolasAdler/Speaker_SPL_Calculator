@@ -9,7 +9,7 @@ class TS_Parameters
 {
 	private:
 
-	double Vas, Mms, Cms, Kms, fs, Qts, Qes, Qms, Sd, Xmax, Sensitivity, Re;
+	double Vas, fs, Qts, Mms, Cms, Kms, Qes, Qms, Sd, Xmax, Sensitivity, Re, Rms;
 
 	public:
 	void set_Vas(double _Vas);
@@ -31,5 +31,21 @@ class TS_Parameters
 	void set_fs(double _fs);
 	void set_fs(double _Cms, double _Mms);
 	double get_fs();
+
+	void set_Qts(double _Qts);
+	void set_Qts(double Qes, double Qms);
+	double get_Qts();
+
+	void set_Sd(float _Sd);
+	void set_Sd(double cone_diameter);
+	double get_Sd();
+
+	void set_Xmax(double _Xmax);
+	void set_Xmax(double cone_height, double gap_height);
+	double get_Xmax();
+
+	void set_Rms(double _Rms);
+	void set_Rms(double _fs, double _Mms, double _Cms);
+	double get_Rms();
 	
 };
