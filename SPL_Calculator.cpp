@@ -127,10 +127,32 @@ double TS_Parameters::get_Rms()
     return this->Rms;
 }
 
+// n0 (Efficiancy) FUNCTIONS
+void TS_Parameters::set_n0(double _n0)
+{
+	this->n0 = _n0;
+}
+void TS_Parameters::set_n0(double _fs, double _Vas, double Qes)
+{
+	this->n0 = ((4*PI*PI))/(C*C*C)) * ((_fs*_fs*_fs*_Vas)/(_Qes));
+}
+double TS_Parameters::get_n0()
+{
+	return this->n0;
+}
+
 // SENSITIVITY FUNCTION
 void TS_Parameters::set_Sensitivity(double _Sensitivity)
 {
     this->Sensitivity = _Sensitivity;
+}
+void TS_Parameters::set_Sensitivity_with_n0(double _n0)
+{
+	this->Sensitivity = 112 + 10*log10(_n0);
+}
+double TS_Parameters::get_Sensitivity()
+{
+	return this->Sensitivity;
 }
 
 // QES FUNCTIONS
@@ -138,13 +160,30 @@ void TS_Parameters::set_Qes(double _Qes)
 {
     this->Qes = _Qes;
 }
+void TS_Parameters::set_Qes(double _Qms, double  _Re, double _Res)
+{
+	this->Qes = _Qms * (_Re/_Res);
+}
+double TS_Parameters::get_Qes()
+{
+	return this->Qes;
+}
 
 // QMS FUNCTIONS
 void TS_Parameters::set_Qms(double _Qms)
 {
     this->Qms = _Qms;
 }
+void TS_Parameters::set_Qms(double _Qes, double  _Re, double _Res)
+{
+	this->Qms = _Qes * (_Res/_Re);
+}
+double TS_Parameters::get_Qms()
+{
+	return this->Qms;
+}
 
+// RE FUNCTIONS
 void TS_Parameters::set_Re(double _Re)
 {
     this->Re = _Re;
@@ -228,6 +267,10 @@ void TS_Parameters::solve()
 		if(!Cms && Vas && Sd)
 		{
 			set_Cms(this->Vas, this->Sd);
+		}
+		if(!Rms && fs && Mms && Cms)
+		{
+			set_Rms(this->fs, this->Mms, this->Cms);	
 		}
 	}
 }

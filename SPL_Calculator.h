@@ -13,6 +13,8 @@ class TS_Parameters
 
 	double Vas, fs, Qts, Qes, Qms, Xmax, Sd, Sensitivity,
 	 Re, Mms, Cms, Kms, Rms;
+
+	double n0;
 	
 	bool Vas_has_value{false}, fs_has_value{false}, Qts_has_value{false}, 
 	Qes_has_value{false}, Qms_has_value{false}, Mms_has_value{false}, 
@@ -46,8 +48,12 @@ class TS_Parameters
 	double get_Qts();
 
 	void set_Qms(double _Qms);
+	void set_Qms(double _Qms);
 	double get_Qms();
+
+	
 	void set_Qes(double _Qes);
+	void set_Qes(double _Qms, double _Re, double _Res);
 	double get_Qes();
 
 	void set_Sd(float _Sd);
@@ -63,6 +69,13 @@ class TS_Parameters
 	double get_Rms();
 
 	void set_Sensitivity(double _Sensitivity);
+	void set_Sensitivity_with_n0(double _n0);
+	double get_Sensitivity();
+
+	void set_n0(double _n0);
+	void set_n0(double _fs, double _Vas, double Qes);
+	double get_n0();
+	
 	void set_Re(double _Re);
 
 	void initialize_speaker(std::ifstream& _file);
