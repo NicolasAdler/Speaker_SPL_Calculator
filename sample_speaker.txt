@@ -5,7 +5,7 @@ Qes 1.6
 Qms 9.108
 Xmax 3.6
 Sd 219
-Lm 77.54
+Sensitivity 77.54
 Re 0.75
 
 

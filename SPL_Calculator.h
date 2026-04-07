@@ -1,5 +1,7 @@
 #include <iostream>
+#include <fstream>
 #include <cmath>
+#include <string>
 
 #define PI 3.14159265358979
 #define RHO 1.225
@@ -9,7 +11,7 @@ class TS_Parameters
 {
 	private:
 
-	double Vas, fs, Qts, Mms, Cms, Kms, Qes, Qms, Sd, Xmax, Sensitivity, Re, Rms;
+	double Vas, fs, Qts, Qes, Qms, Mms, Cms, Kms, Sd, Xmax, Sensitivity, Re, Rms;
 
 	public:
 	void set_Vas(double _Vas);
@@ -48,10 +50,10 @@ class TS_Parameters
 	void set_Rms(double _fs, double _Mms, double _Cms);
 	double get_Rms();
 
+	void set_Sensitivity(double _Sensitivity);
+	void set_Qms(double _Qms);
+	void set_Qes(double _Qes);
+	void set_Re(double _Re);
 
-	void initialize_speaker()
-	{
-		
-	}
-	
+	void initialize_speaker(TS_Parameters& _speaker, std::ifstream& _file);
 };
