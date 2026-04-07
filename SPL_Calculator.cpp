@@ -150,7 +150,7 @@ void TS_Parameters::set_Re(double _Re)
     this->Re = _Re;
 }
 
-void TS_Parameters::initialize_speaker(TS_Parameters& _speaker, std::ifstream& _file)
+void TS_Parameters::initialize_speaker(std::ifstream& _file)
 {
     
     if(!_file.is_open())
@@ -165,39 +165,49 @@ void TS_Parameters::initialize_speaker(TS_Parameters& _speaker, std::ifstream& _
         {
             if(parameter_name == "Vas")
             {
-                _speaker.set_Vas(value);
+                this->set_Vas(value);
+                Vas_has_value = true;
+                
             }
             else if(parameter_name == "fs")
             {
-                _speaker.set_fs(value);
+                this->set_fs(value);
+                fs_has_value = true;
             }
             else if(parameter_name == "Qts")
             {
-                _speaker.set_Qts(value);
+                this->set_Qts(value);
+                Qts_has_value = true;
             }
             else if(parameter_name == "Qes")
             {
-                _speaker.set_Qes(value);
+                this->set_Qes(value);
+                Qes_has_value = true;
             }
             else if(parameter_name == "Qms")
             {
-                _speaker.set_Qms(value);
+                this->set_Qms(value);
+                Qms_has_value = true;
             }
             else if(parameter_name == "Xmax")
             {
-                _speaker.set_Xmax(value);
+                this->set_Xmax(value);
+                Xmax_has_value = true;
             }
             else if(parameter_name == "Sd")
             {
-                _speaker.set_Sd(value);
+                this->set_Sd(value);
+                Sd_has_value = true;
             }
             else if(parameter_name == "Sensitivity")
             {
-                _speaker.set_Sensitivity(value);
+                this->set_Sensitivity(value);
+                Sensitivity_has_value = true;
             }
             else if(parameter_name == "Re")
             {
-                _speaker.set_(value);
+                this->set_(value);
+                Re_has_value = true;
             }
             else
             {
@@ -206,5 +216,19 @@ void TS_Parameters::initialize_speaker(TS_Parameters& _speaker, std::ifstream& _
             }
         }
     }
+}
+
+void TS_Parameters::solve()
+{
+	bool update;
+	do
+	{
+		update = false;
+
+		if(!Cms && Vas && Sd)
+		{
+			set_Cms(this->Vas, this->Sd);
+		}
+	}
 }
 

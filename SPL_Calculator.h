@@ -11,7 +11,14 @@ class TS_Parameters
 {
 	private:
 
-	double Vas, fs, Qts, Qes, Qms, Mms, Cms, Kms, Sd, Xmax, Sensitivity, Re, Rms;
+	double Vas, fs, Qts, Qes, Qms, Xmax, Sd, Sensitivity,
+	 Re, Mms, Cms, Kms, Rms;
+	
+	bool Vas_has_value{false}, fs_has_value{false}, Qts_has_value{false}, 
+	Qes_has_value{false}, Qms_has_value{false}, Mms_has_value{false}, 
+	Cms_has_value{false},  Kms_has_value{false}, Sd_has_value{false}, 
+	Xmax_has_value{false}, Sensitivity_has_value{false},
+	Re_has_value{false}, Rms_has_value{false};
 
 	public:
 	void set_Vas(double _Vas);
@@ -38,6 +45,11 @@ class TS_Parameters
 	void set_Qts(double Qes, double Qms);
 	double get_Qts();
 
+	void set_Qms(double _Qms);
+	double get_Qms();
+	void set_Qes(double _Qes);
+	double get_Qes();
+
 	void set_Sd(float _Sd);
 	void set_Sd_with_cone_diameter(double cone_diameter);
 	double get_Sd();
@@ -51,9 +63,8 @@ class TS_Parameters
 	double get_Rms();
 
 	void set_Sensitivity(double _Sensitivity);
-	void set_Qms(double _Qms);
-	void set_Qes(double _Qes);
 	void set_Re(double _Re);
 
-	void initialize_speaker(TS_Parameters& _speaker, std::ifstream& _file);
+	void initialize_speaker(std::ifstream& _file);
+	void solve();
 };
