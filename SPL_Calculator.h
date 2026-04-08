@@ -12,7 +12,7 @@ class TS_Parameters
 	private:
 
 	double Vas, fs, Qts, Qes, Qms, Xmax, Sd, Sensitivity,
-	 Re, Mms, Cms, Kms, Rms;
+	 Mms, Cms, Kms, Rms, Re, Res;
 
 	double n0;
 	
@@ -48,12 +48,14 @@ class TS_Parameters
 	double get_Qts();
 
 	void set_Qms(double _Qms);
-	void set_Qms(double _Qms);
+	void set_Qms(double _Qes, double  _Re, double _Res);
+	void set_Qms(double _Qts, double Qes);
 	double get_Qms();
 
 	
 	void set_Qes(double _Qes);
 	void set_Qes(double _Qms, double _Re, double _Res);
+	void set_Qes(double _Qts, double _Qms);
 	double get_Qes();
 
 	void set_Sd(float _Sd);
@@ -66,6 +68,7 @@ class TS_Parameters
 
 	void set_Rms(double _Rms);
 	void set_Rms(double _fs, double _Mms, double _Cms);
+	void set_Rms_with_Qms(double _fs, double _Mms, double _Qms);
 	double get_Rms();
 
 	void set_Sensitivity(double _Sensitivity);

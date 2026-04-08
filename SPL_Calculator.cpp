@@ -5,7 +5,6 @@ void TS_Parameters::set_Mms(double _Mms)
 {
     this->Mms =  _Mms;
 }
-
 void TS_Parameters::set_Mms(double _fs, double _Cms)
 {
     this->Mms = 1 / (((2*PI*_fs) * (2*PI*_fs)) * _Cms);
@@ -122,6 +121,10 @@ void TS_Parameters::set_Rms(double _fs,double _Mms, double _Cms)
 {
     this->Rms = (2*PI*_fs) * sqrt(_Mms / _Cms);
 }
+void TS_Parameters::set_Rms_with_Qms(double _fs, double _Mms, double _Qms)
+{
+	this->Rms = (2*PI*_fs*_Mms) / (_Qms);
+}
 double TS_Parameters::get_Rms()
 {
     return this->Rms;
@@ -134,7 +137,9 @@ void TS_Parameters::set_n0(double _n0)
 }
 void TS_Parameters::set_n0(double _fs, double _Vas, double Qes)
 {
-	this->n0 = ((4*PI*PI))/(C*C*C)) * ((_fs*_fs*_fs*_Vas)/(_Qes));
+	double first = (4*PI*PI) * (C*C*C);
+	double second = (_fs*_fs*_fs*_Vas) / Qes;
+	this->n0 = first * second;
 }
 double TS_Parameters::get_n0()
 {
@@ -164,6 +169,10 @@ void TS_Parameters::set_Qes(double _Qms, double  _Re, double _Res)
 {
 	this->Qes = _Qms * (_Re/_Res);
 }
+void TS_Parameters::set_Qes(double _Qts, double _Qms)
+{
+	this->Qes = _Qts - _Qms;
+}
 double TS_Parameters::get_Qes()
 {
 	return this->Qes;
@@ -177,6 +186,10 @@ void TS_Parameters::set_Qms(double _Qms)
 void TS_Parameters::set_Qms(double _Qes, double  _Re, double _Res)
 {
 	this->Qms = _Qes * (_Res/_Re);
+}
+void TS_Parameters::set_Qms(double _Qts, double Qes)
+{
+	this->Qms = _Qts - Qes;
 }
 double TS_Parameters::get_Qms()
 {
@@ -245,7 +258,7 @@ void TS_Parameters::initialize_speaker(std::ifstream& _file)
             }
             else if(parameter_name == "Re")
             {
-                this->set_(value);
+                this->set_Re(value);
                 Re_has_value = true;
             }
             else
@@ -263,15 +276,63 @@ void TS_Parameters::solve()
 	do
 	{
 		update = false;
-
-		if(!Cms && Vas && Sd)
+		
+		if(!Vas && Sd && Cms)
+		{
+			set_Vas(this->Sd, this->Cms);
+		}
+		else if(!Mms && fs && Cms)
+		{
+			set_Mms(this->fs, this->Cms);
+		}
+		else if(!Cms && Vas && Sd)
 		{
 			set_Cms(this->Vas, this->Sd);
 		}
-		if(!Rms && fs && Mms && Cms)
+		else if(!Kms && Cms)
+		{
+			set_Kms_with_Cms(this->Cms);
+		}
+		else if(!fs && Cms && Mms)
+		{
+			set_fs(this->Cms, this->Mms);
+		}
+		else if(!Qts && Qes &&Qms)
+		{
+			set_Qts(this->Qes, this->Qms);
+		}
+		else if(!Qms && Qes && Re && Res)
+		{
+			set_Qms(this->Qes, this->Re, this->Res);
+		}
+		else if(!Qms && Qts && Qes)
+		{
+			set_Qms(this->Qts, this->Qes);
+		}
+		else if(!Qes && Qms && Re && Res)
+		{
+			set_Qes(this->Qms, this->Re, this->Res);
+		}
+		else if(!Qes && Qts && Qms)
+		{
+			set_Qes(this->Qts, this->Qms);
+		}
+		else if(!Rms && fs && Mms && Cms)
 		{
 			set_Rms(this->fs, this->Mms, this->Cms);	
 		}
-	}
+		else if(!Rms && fs && Mms && Qms)
+		{
+			set_Rms_with_Qms(this->fs, this->Mms, this->Qms);
+		}
+		else if(!Sensitivity && n0)
+		{
+			set_Sensitivity_with_n0(this->n0);
+		}
+		else if(!n0 && fs && Vas && Qes)
+		{
+			set_n0(this->fs, this->Vas, this->Qes);
+		}
+	} while(update);
 }
 
