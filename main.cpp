@@ -4,15 +4,14 @@
 
 int main()
 {
-	std::string filename = "no_Vas.txt";
-	std::ifstream inFile(filename);
+    std::string filename = "//Users/nicolasadler/Documents/2026/rockford/Speaker_SPL_Calculator/sample_speaker_no_fs.txt";
+    std::ifstream inFile(filename);
 
-	TS_Parameters speaker1;
-	speaker1.initialize_speaker(inFile);
-	speaker1.solve();
-	
-	std::cout<<"You are here!\n";
-	std::cout<<speaker1.get_Vas()<<std::endl;
+    TS_Parameters speaker1;
+    speaker1.initialize_speaker(inFile);
+    speaker1.solve();
+    
+    std::cout<<speaker1.get_fs()<<std::endl;
 
-	return 0;
+    return 0;
 }

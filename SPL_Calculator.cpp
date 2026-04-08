@@ -123,7 +123,7 @@ void TS_Parameters::set_Rms(double _fs,double _Mms, double _Cms)
 }
 void TS_Parameters::set_Rms_with_Qms(double _fs, double _Mms, double _Qms)
 {
-	this->Rms = (2*PI*_fs*_Mms) / (_Qms);
+    this->Rms = (2*PI*_fs*_Mms) / (_Qms);
 }
 double TS_Parameters::get_Rms()
 {
@@ -133,17 +133,17 @@ double TS_Parameters::get_Rms()
 // n0 (Efficiancy) FUNCTIONS
 void TS_Parameters::set_n0(double _n0)
 {
-	this->n0 = _n0;
+    this->n0 = _n0;
 }
 void TS_Parameters::set_n0(double _fs, double _Vas, double Qes)
 {
-	double first = (4*PI*PI) * (C*C*C);
-	double second = (_fs*_fs*_fs*_Vas) / Qes;
-	this->n0 = first * second;
+    double first = (4*PI*PI) * (C*C*C);
+    double second = (_fs*_fs*_fs*_Vas) / Qes;
+    this->n0 = first * second;
 }
 double TS_Parameters::get_n0()
 {
-	return this->n0;
+    return this->n0;
 }
 
 // SENSITIVITY FUNCTION
@@ -153,11 +153,11 @@ void TS_Parameters::set_Sensitivity(double _Sensitivity)
 }
 void TS_Parameters::set_Sensitivity_with_n0(double _n0)
 {
-	this->Sensitivity = 112 + 10*log10(_n0);
+    this->Sensitivity = 112 + 10*log10(_n0);
 }
 double TS_Parameters::get_Sensitivity()
 {
-	return this->Sensitivity;
+    return this->Sensitivity;
 }
 
 // QES FUNCTIONS
@@ -167,15 +167,15 @@ void TS_Parameters::set_Qes(double _Qes)
 }
 void TS_Parameters::set_Qes(double _Qms, double  _Re, double _Res)
 {
-	this->Qes = _Qms * (_Re/_Res);
+    this->Qes = _Qms * (_Re/_Res);
 }
 void TS_Parameters::set_Qes(double _Qts, double _Qms)
 {
-	this->Qes = _Qts - _Qms;
+    this->Qes = _Qts - _Qms;
 }
 double TS_Parameters::get_Qes()
 {
-	return this->Qes;
+    return this->Qes;
 }
 
 // QMS FUNCTIONS
@@ -185,15 +185,15 @@ void TS_Parameters::set_Qms(double _Qms)
 }
 void TS_Parameters::set_Qms(double _Qes, double  _Re, double _Res)
 {
-	this->Qms = _Qes * (_Res/_Re);
+    this->Qms = _Qes * (_Res/_Re);
 }
 void TS_Parameters::set_Qms(double _Qts, double Qes)
 {
-	this->Qms = _Qts - Qes;
+    this->Qms = _Qts - Qes;
 }
 double TS_Parameters::get_Qms()
 {
-	return this->Qms;
+    return this->Qms;
 }
 
 // RE FUNCTIONS
@@ -272,67 +272,80 @@ void TS_Parameters::initialize_speaker(std::ifstream& _file)
 
 void TS_Parameters::solve()
 {
-	bool update;
-	do
-	{
-		update = false;
-		
-		if(!Vas && Sd && Cms)
-		{
-			set_Vas(this->Sd, this->Cms);
-		}
-		else if(!Mms && fs && Cms)
-		{
-			set_Mms(this->fs, this->Cms);
-		}
-		else if(!Cms && Vas && Sd)
-		{
-			set_Cms(this->Vas, this->Sd);
-		}
-		else if(!Kms && Cms)
-		{
-			set_Kms_with_Cms(this->Cms);
-		}
-		else if(!fs && Cms && Mms)
-		{
-			set_fs(this->Cms, this->Mms);
-		}
-		else if(!Qts && Qes &&Qms)
-		{
-			set_Qts(this->Qes, this->Qms);
-		}
-		else if(!Qms && Qes && Re && Res)
-		{
-			set_Qms(this->Qes, this->Re, this->Res);
-		}
-		else if(!Qms && Qts && Qes)
-		{
-			set_Qms(this->Qts, this->Qes);
-		}
-		else if(!Qes && Qms && Re && Res)
-		{
-			set_Qes(this->Qms, this->Re, this->Res);
-		}
-		else if(!Qes && Qts && Qms)
-		{
-			set_Qes(this->Qts, this->Qms);
-		}
-		else if(!Rms && fs && Mms && Cms)
-		{
-			set_Rms(this->fs, this->Mms, this->Cms);	
-		}
-		else if(!Rms && fs && Mms && Qms)
-		{
-			set_Rms_with_Qms(this->fs, this->Mms, this->Qms);
-		}
-		else if(!Sensitivity && n0)
-		{
-			set_Sensitivity_with_n0(this->n0);
-		}
-		else if(!n0 && fs && Vas && Qes)
-		{
-			set_n0(this->fs, this->Vas, this->Qes);
-		}
-	} while(update);
+    bool update;
+    do
+    {
+        update = false;
+        
+        if(Vas == 0.0 && Sd && Cms)
+        {
+            set_Vas(this->Sd, this->Cms);
+            update = true;
+        }
+        if(Cms == 0.0 && Vas && Sd)
+        {
+            set_Cms(this->Vas, this->Sd);
+            update = true;
+        }
+        if(Mms == 0.0 && fs && Cms)
+        {
+            set_Mms(this->fs, this->Cms);
+            update = true;
+        }
+//        else if(Kms == 0.0 && Cms)
+//        {
+//            set_Kms_with_Cms(this->Cms);
+//        }
+        if((fs == 0.0) && Cms && Mms)
+        {
+            set_fs(this->Cms, this->Mms);
+            update = true;
+        }
+        if(Qts == 0.0 && Qes &&Qms)
+        {
+            set_Qts(this->Qes, this->Qms);
+            update = true;
+        }
+        else if(Qms == 0.0 && Qes && Re && Res)
+        {
+            set_Qms(this->Qes, this->Re, this->Res);
+            update = true;
+        }
+        else if(Qms == 0.0 && Qts && Qes)
+        {
+            set_Qms(this->Qts, this->Qes);
+            update = true;
+        }
+        else if(Qes == 0.0 && Qms && Re && Res)
+        {
+            set_Qes(this->Qms, this->Re, this->Res);
+            update = true;
+        }
+        else if(Qes == 0.0 && Qts && Qms)
+        {
+            set_Qes(this->Qts, this->Qms);
+            update = true;
+        }
+        else if(Rms == 0.0 && fs && Mms && Cms)
+        {
+            set_Rms(this->fs, this->Mms, this->Cms);
+            update = true;
+        }
+        else if(Rms == 0.0 && fs && Mms && Qms)
+        {
+            set_Rms_with_Qms(this->fs, this->Mms, this->Qms);
+            update = true;
+        }
+        else if(Sensitivity == 0.0 && n0)
+        {
+            set_Sensitivity_with_n0(this->n0);
+            update = true;
+        }
+        else if(n0 == 0.0 && fs && Vas && Qes)
+        {
+            set_n0(this->fs, this->Vas, this->Qes);
+            update = true;
+        }
+    } while(update);
 }
 
