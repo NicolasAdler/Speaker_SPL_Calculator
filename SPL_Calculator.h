@@ -14,7 +14,7 @@ class TS_Parameters
     double Vas{0.0}, fs{0.0}, Qts{0.0}, Qes{0.0}, Qms{0.0}, Xmax{0.0}, Sd{0.0}, Sensitivity{0.0},
     Mms{0.0}, Cms{0.0}, Kms{0.0}, Rms{0.0}, Re{0.0}, Res{0.0};
 
-    double n0;
+    double n0{0}, Vas_converstion{0};
     
     bool Vas_has_value{false}, fs_has_value{false}, Qts_has_value{false},
     Qes_has_value{false}, Qms_has_value{false}, Mms_has_value{false},
@@ -32,7 +32,7 @@ class TS_Parameters
     double get_Mms();
 
     void set_Cms(double _Cms);
-    void set_Cms(double _Vas, double _Sd);
+    void set_Cms_with_Sd(double _Sd);
     double get_Cms();
 
     void set_Kms(float _Kms);
@@ -68,7 +68,7 @@ class TS_Parameters
 
     void set_Rms(double _Rms);
     void set_Rms(double _fs, double _Mms, double _Cms);
-    void set_Rms_with_Qms(double _fs, double _Mms, double _Qms);
+    void set_Rms_with_Qms(double _fs, double _Cms, double _Qms);
     double get_Rms();
 
     void set_Sensitivity(double _Sensitivity);
