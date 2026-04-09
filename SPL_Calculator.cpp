@@ -7,6 +7,7 @@ void TS_Parameters::set_Mms(double _Mms)
 }
 void TS_Parameters::set_Mms(double _fs, double _Cms)
 {
+	_Cms = convert_mm_to_m(_Cms);
     this->Mms = 1 / (pow(2*PI*_fs, 2) * _Cms);
 }
 double TS_Parameters::get_Mms()
@@ -19,10 +20,10 @@ void TS_Parameters::set_Cms(double _Cms)
 {
     this->Cms = _Cms;
 }
-void TS_Parameters::set_Cms_with_Sd(double _Sd)
+void TS_Parameters::set_Cms_with_Mms_and_fs(double _fs, double _Mms)
 {
-
-    this->Cms = (Vas_converstion) / ((_Sd * _Sd)*RHO * C);
+	_Mms = convert_g_to_kg(_Mms);
+    this->Cms = 1 / ((4*PI*PI*_fs*_fs) * _Mms);
 }
 double TS_Parameters::get_Cms()
 {
@@ -33,11 +34,11 @@ double TS_Parameters::get_Cms()
 void TS_Parameters::set_Vas(double _Vas)
 {
     this->Vas = _Vas;
-    this->Vas_converstion = Vas / 1000;
 }
 void TS_Parameters::set_Vas(double _Sd, double _Cms)
-{
-    this->Vas = RHO*(C*C)*(_Sd*_Sd) * _Cms;
+{	
+	_Cms = convert_mm_to_m(_Cms);
+    this->Vas = (RHO*(C*C)*(_Sd*_Sd) * _Cms);
 }
 double  TS_Parameters::get_Vas()
 {
@@ -50,7 +51,7 @@ void TS_Parameters::set_Kms(float _Kms)
     this->Kms = _Kms;
 }
 void TS_Parameters::set_Kms_with_Cms(double _Cms)
-{
+{	
     this->Kms = 1 / _Cms;
 }
 double TS_Parameters::get_Kms()
@@ -64,7 +65,9 @@ void TS_Parameters::set_fs(double _fs)
     this->fs = _fs;
 }
 void TS_Parameters::set_fs(double _Cms, double _Mms)
-{
+{	
+	_Cms = convert_mm_to_m(_Cms);
+	_Mms = convert_g_to_kg(_Mms);
     this->fs = (1/(2*PI)) * sqrt(1 / (_Cms * _Mms));
 }
 double TS_Parameters::get_fs()
@@ -121,6 +124,7 @@ void TS_Parameters::set_Rms(double _Rms)
 }
 void TS_Parameters::set_Rms(double _fs, double _Cms, double _Qms)
 {
+	_Cms = convert_mm_to_m(_Cms);
     this->Rms = (1 / (_Qms * _fs * 2 * PI * _Cms)) * 1000;
 }
 double TS_Parameters::get_Rms()
@@ -193,10 +197,34 @@ double TS_Parameters::get_Qms()
     return this->Qms;
 }
 
+// Bl FUNCIONS
+void TS_Parameters::set_Bl(double _Bl)
+{
+	this->Bl = _Bl;
+}
+void TS_Parameters::set_Bl(double _fs, double _Mms, double _Re, double _Qes)
+{
+	_Mms = convert_g_to_kg(_Mms);
+	this->Bl = sqrt((2*PI*_fs*_Mms*_Re)/(_Qes));
+}
+double TS_Parameters::get_Bl()
+{
+	return this->Bl;
+}
+
 // RE FUNCTIONS
 void TS_Parameters::set_Re(double _Re)
 {
     this->Re = _Re;
+}
+
+double TS_Parameters::convert_g_to_kg(double _value_in_grams)
+{
+	return _value_in_grams / 1000;
+}
+double TS_Parameters::convert_mm_to_m(double _value_in_mm)
+{
+	return _value_in_mm / 1000;
 }
 
 void TS_Parameters::initialize_speaker(std::ifstream& _file)
@@ -258,11 +286,31 @@ void TS_Parameters::initialize_speaker(std::ifstream& _file)
                 this->set_Re(value);
                 Re_has_value = true;
             }
+            else if(parameter_name == "n0")
+            {
+            	this->set_n0(value);
+            	n0_has_value = true;
+            }
             else if(parameter_name == "Cms")
             {
                 this->set_Cms(value);
                 Cms_has_value = true;
             }
+            else if(parameter_name == "Mms")
+            {
+                this->set_Mms(value);
+                Mms_has_value = true;
+            }
+            else if(parameter_name == "Rms")
+            {
+                this->set_Rms(value);
+                Rms_has_value = true;
+            }
+            else if(parameter_name == "Bl")
+            {
+                this->set_Bl(value);
+                Bl_has_value = true;
+            }            
             else
             {
                 std::cout<<"Parameter name is unrecognized\n";
@@ -284,9 +332,9 @@ void TS_Parameters::solve()
             set_Vas(this->Sd, this->Cms);
             update = true;
         }
-        if(Cms == 0.0 && Vas != 0 && Sd != 0)
+        if(Cms == 0.0 && fs != 0 && Mms != 0)
         {
-            set_Cms_with_Sd(this->Sd);
+            set_Cms_with_Mms_and_fs(this->fs, this->Mms);
             update = true;
         }
         if(Mms == 0.0 && fs != 0 && Cms != 0)
@@ -328,11 +376,11 @@ void TS_Parameters::solve()
             set_Qes(this->Qts, this->Qms);
             update = true;
         }
-//        if(Rms == 0.0 && fs != 0 && Mms && Cms != 0)
-//        {
-//            set_Rms(this->fs, this->Mms, this->Cms);
-//            update = true;
-//        }
+        if(Rms == 0.0 && fs != 0 && Mms && Cms != 0)
+        {
+            set_Rms(this->fs, this->Mms, this->Cms);
+            update = true;
+        }
         if(Rms == 0.0 && fs != 0 && Mms && Qms != 0)
         {
             set_Rms(this->fs, this->Cms, this->Qms);
@@ -347,6 +395,11 @@ void TS_Parameters::solve()
         {
             set_n0(this->fs, this->Vas, this->Qes);
             update = true;
+        }
+        if(Bl == 0 && fs != 0 && Mms != 0 && Re != 0 && Qes != 0)
+        {
+        	set_Bl(this->fs, this->Mms,this->Re, this->Qes);
+        	update = true;
         }
     } while(update);
 }
