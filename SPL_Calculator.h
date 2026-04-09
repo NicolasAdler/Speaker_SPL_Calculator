@@ -14,13 +14,13 @@ class TS_Parameters
     double Vas{0.0}, fs{0.0}, Qts{0.0}, Qes{0.0}, Qms{0.0}, Xmax{0.0}, Sd{0.0}, Sensitivity{0.0},
     Mms{0.0}, Cms{0.0}, Kms{0.0}, Rms{0.0}, Re{0.0}, Res{0.0};
 
-    double n0{0}, Vas_converstion{0};
+    double n0{0}, Vas_converstion{0}, Bl{0};
     
     bool Vas_has_value{false}, fs_has_value{false}, Qts_has_value{false},
     Qes_has_value{false}, Qms_has_value{false}, Mms_has_value{false},
     Cms_has_value{false},  Kms_has_value{false}, Sd_has_value{false},
-    Xmax_has_value{false}, Sensitivity_has_value{false},
-    Re_has_value{false}, Rms_has_value{false};
+    Xmax_has_value{false}, Sensitivity_has_value{false}, 
+    Re_has_value{false}, Rms_has_value{false}, n0_has_value{false}, Bl_has_value{false};
 
     public:
     void set_Vas(double _Vas);
@@ -32,7 +32,7 @@ class TS_Parameters
     double get_Mms();
 
     void set_Cms(double _Cms);
-    void set_Cms_with_Sd(double _Sd);
+    void set_Cms_with_Mms_and_fs(double _fs, double _Mms);
     double get_Cms();
 
     void set_Kms(float _Kms);
@@ -75,11 +75,19 @@ class TS_Parameters
     void set_Sensitivity_with_n0(double _n0);
     double get_Sensitivity();
 
+    void set_Bl(double _Bl);
+    void set_Bl(double _fs, double _Mms, double _Re, double _Qes);
+    double get_Bl();
+
     void set_n0(double _n0);
     void set_n0(double _fs, double _Vas, double Qes);
     double get_n0();
     
     void set_Re(double _Re);
+
+    double convert_g_to_kg(double _value_in_grams);
+
+    double convert_mm_to_m(double _value_in_mm);
 
     void initialize_speaker(std::ifstream& _file);
     void solve();
