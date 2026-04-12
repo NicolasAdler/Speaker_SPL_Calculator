@@ -1,4 +1,5 @@
 Vas 5.4
+fs 42.4
 Qts 1.361
 Qes 1.6
 Qms 9.108
@@ -6,3 +7,4 @@ Xmax 3.6
 Sd 219
 Sensitivity 77.54
 Re 0.75
+Cms 0.08

@@ -38,6 +38,7 @@ void TS_Parameters::set_Vas(double _Vas)
 void TS_Parameters::set_Vas(double _Sd, double _Cms)
 {	
 	_Cms = convert_mm_to_m(_Cms);
+	_Sd = convert_cm2_to_m(_Sd);
     this->Vas = (RHO*(C*C)*(_Sd*_Sd) * _Cms);
 }
 double  TS_Parameters::get_Vas()
@@ -218,6 +219,7 @@ void TS_Parameters::set_Re(double _Re)
     this->Re = _Re;
 }
 
+// CONVERSION FUNCTIONS
 double TS_Parameters::convert_g_to_kg(double _value_in_grams)
 {
 	return _value_in_grams / 1000;
@@ -226,6 +228,14 @@ double TS_Parameters::convert_mm_to_m(double _value_in_mm)
 {
 	return _value_in_mm / 1000;
 }
+//TEST PLS!!!!!
+double TS_Parameters::convert_cm2_to_m2(double _value_in_cm2)
+{
+	_value_in_cm2 = _value_in_cm2 * (1/100) * (1/100);
+	return _value_in_cm2;
+}
+
+
 
 void TS_Parameters::initialize_speaker(std::ifstream& _file)
 {

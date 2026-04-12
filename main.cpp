@@ -41,8 +41,12 @@ int main()
 	Bl 4.68
      
      */
-    // CMS NOT WORKING
-    // VAS NOT WORKING
+
+	/*
+	Y or N.
+	TEST 1: VAS, DID IT PASS?: N
+
+	*/
 
     return 0;
 }

@@ -89,6 +89,8 @@ class TS_Parameters
 
     double convert_mm_to_m(double _value_in_mm);
 
+    double convert_cm2_to_m2(double _value_in_cm2);
+
     void initialize_speaker(std::ifstream& _file);
     void solve();
 };
