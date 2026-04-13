@@ -8,7 +8,7 @@ void TS_Parameters::set_Mms(double _Mms)
 void TS_Parameters::set_Mms(double _fs, double _Cms)
 {
 	_Cms = convert_mm_to_m(_Cms);
-    this->Mms = 1 / (pow(2*PI*_fs, 2) * _Cms);
+    this->Mms = 1 / (pow(2*PI*_fs, 2) * _Cms) * 1000;
 }
 double TS_Parameters::get_Mms()
 {
@@ -23,7 +23,7 @@ void TS_Parameters::set_Cms(double _Cms)
 void TS_Parameters::set_Cms_with_Mms_and_fs(double _fs, double _Mms)
 {
 	_Mms = convert_g_to_kg(_Mms);
-    this->Cms = 1 / ((4*PI*PI*_fs*_fs) * _Mms);
+    this->Cms = 1 / ((4*PI*PI*_fs*_fs) * _Mms) *1000;
 }
 double TS_Parameters::get_Cms()
 {
@@ -36,10 +36,11 @@ void TS_Parameters::set_Vas(double _Vas)
     this->Vas = _Vas;
 }
 void TS_Parameters::set_Vas(double _Sd, double _Cms)
-{	
-	_Cms = convert_mm_to_m(_Cms);
-	_Sd = convert_cm2_to_m(_Sd);
-    this->Vas = (RHO*(C*C)*(_Sd*_Sd) * _Cms);
+{
+    _Cms = convert_mm_to_m(_Cms);
+    _Sd = convert_cm2_to_m2(_Sd);
+    double _Vas = (RHO*(C*C)*(_Sd*_Sd) * _Cms);
+    this->Vas = convert_m2_to_cm2(_Vas);
 }
 double  TS_Parameters::get_Vas()
 {
@@ -123,10 +124,13 @@ void TS_Parameters::set_Rms(double _Rms)
 {
     this->Rms = _Rms;
 }
-void TS_Parameters::set_Rms(double _fs, double _Cms, double _Qms)
+void TS_Parameters::set_Rms(double _fs, double _Mms, double _Qms)
 {
-	_Cms = convert_mm_to_m(_Cms);
-    this->Rms = (1 / (_Qms * _fs * 2 * PI * _Cms)) * 1000;
+	//_Cms = convert_mm_to_m(_Cms);
+	_Mms = convert_g_to_kg(_Mms);
+    //this->Rms = (1 / (_Qms * _fs * 2 * PI * _Cms)) * 1000;
+    double _Rms = (2*PI*_fs*_Mms) / _Qms;
+    this->Rms = _Rms / 100;
 }
 double TS_Parameters::get_Rms()
 {
@@ -218,24 +222,37 @@ void TS_Parameters::set_Re(double _Re)
 {
     this->Re = _Re;
 }
+double TS_Parameters::get_Re()
+{
+	return this->Re;
+}
 
 // CONVERSION FUNCTIONS
 double TS_Parameters::convert_g_to_kg(double _value_in_grams)
 {
 	return _value_in_grams / 1000;
 }
+double TS_Parameters::convert_kg_to_g(double _value_in_kg)
+{
+	return _value_in_kg *1000;
+}
 double TS_Parameters::convert_mm_to_m(double _value_in_mm)
 {
 	return _value_in_mm / 1000;
 }
-//TEST PLS!!!!!
+double TS_Parameters::convert_m_to_mm(double _value_in_m)
+{
+	return _value_in_m * 1000;
+}
 double TS_Parameters::convert_cm2_to_m2(double _value_in_cm2)
 {
-	_value_in_cm2 = _value_in_cm2 * (1/100) * (1/100);
+	_value_in_cm2 = _value_in_cm2 * (1.0/100.0) * (1.0/100.0);
 	return _value_in_cm2;
 }
-
-
+double TS_Parameters::convert_m2_to_cm2(double _value_in_m2)
+{
+	return _value_in_m2 * 1000.0;
+}
 
 void TS_Parameters::initialize_speaker(std::ifstream& _file)
 {
@@ -412,5 +429,27 @@ void TS_Parameters::solve()
         	update = true;
         }
     } while(update);
+}
+void TS_Parameters::compute_transfer_function(std::vector<double>& _spl_values)
+{
+	if(n0 == 0)
+	{
+		std::cout<<"You must have n0 in order to be able to calculate the H(f).\n";
+		return;
+	}
+	const double SPL_ref = 112.2 + 10 * std::log10(this->n0);
+	int frequency;
+	for(int i = 0; i < 20001; i++)
+	{
+		frequency = i;
+		if(frequency < 20)
+		{
+			_spl_values[frequency] = 0;
+		}
+		else
+		{
+			
+		}
+	}	
 }
 

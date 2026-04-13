@@ -18,6 +18,8 @@ int main()
     std::cout<<"Xmax: "<<speaker1.get_Xmax()<<std::endl;
     std::cout<<"Sd: "<<speaker1.get_Sd()<<std::endl;
     std::cout<<"Sensitivity: "<<speaker1.get_Sensitivity()<<std::endl;
+   // std::cout<<"Re: "<<speaker1.get_Re()<<std::endl;
+    std::cout<<"n0: "<<speaker1.get_n0()<<std::endl;
     std::cout<<"Cms: "<<speaker1.get_Cms()<<std::endl;
     std::cout<<"Mms: "<<speaker1.get_Mms()<<std::endl;
     std::cout<<"Rms: "<<speaker1.get_Rms()<<std::endl;
@@ -44,7 +46,20 @@ int main()
 
 	/*
 	Y or N.
-	TEST 1: VAS, DID IT PASS?: N
+	TEST 1: Vas, DID IT PASS?: 			Y
+	TEST 2: fs, DID IT PASS?:  			Y
+	TEST 3: Qts, DID IT PASS?: 			Y
+	TEST 4: Qes, DID IT PASS?: 			Y
+	TEST 5: Qms, DID IT PASS?: 			Y
+	
+	TEST 5: Sd, DID IT PASS?:  			N
+	
+	TEST 6: Sensitivity, DID IT PASS?: 	Y	
+	TEST : n0, DID IT PASS?: 			
+	TEST : Cms, DID IT PASS?: 			
+	TEST : Mms, DID IT PASS?: 			
+	TEST : Rms, DID IT PASS?: 			
+	TEST : Bl, DID IT PASS?: 			
 
 	*/
 

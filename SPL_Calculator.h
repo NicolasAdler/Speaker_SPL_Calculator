@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cmath>
 #include <string>
+#include <vector>
 
 #define PI 3.14159265358979
 #define RHO 1.225
@@ -15,6 +16,9 @@ class TS_Parameters
     Mms{0.0}, Cms{0.0}, Kms{0.0}, Rms{0.0}, Re{0.0}, Res{0.0};
 
     double n0{0}, Vas_converstion{0}, Bl{0};
+
+    std::vector<double> spl_values;
+    int frequency_start{20}, frequency_end{20000};
     
     bool Vas_has_value{false}, fs_has_value{false}, Qts_has_value{false},
     Qes_has_value{false}, Qms_has_value{false}, Mms_has_value{false},
@@ -23,6 +27,10 @@ class TS_Parameters
     Re_has_value{false}, Rms_has_value{false}, n0_has_value{false}, Bl_has_value{false};
 
     public:
+    TS_Parameters()
+    {
+    	spl_values.reserve(19981);
+    }
     void set_Vas(double _Vas);
     void set_Vas(double _Sd, double _Cms);
     double get_Vas();
@@ -68,7 +76,7 @@ class TS_Parameters
 
     void set_Rms(double _Rms);
     void set_Rms(double _fs, double _Mms, double _Cms);
-    void set_Rms_with_Qms(double _fs, double _Cms, double _Qms);
+    void set_Rms_with_Qms(double _fs, double _Mms, double _Qms);
     double get_Rms();
 
     void set_Sensitivity(double _Sensitivity);
@@ -84,13 +92,18 @@ class TS_Parameters
     double get_n0();
     
     void set_Re(double _Re);
+    double get_Re();
 
     double convert_g_to_kg(double _value_in_grams);
-
+    double convert_kg_to_g(double _value_in_kg);
     double convert_mm_to_m(double _value_in_mm);
-
+    double convert_m_to_mm(double _value_in_m);
     double convert_cm2_to_m2(double _value_in_cm2);
+    double convert_m2_to_cm2(double _value_in_m2);
+
 
     void initialize_speaker(std::ifstream& _file);
     void solve();
+    void compute_transfer_function(std::vector<double>& _spl_values);
+    
 };
