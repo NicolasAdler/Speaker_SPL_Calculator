@@ -6,6 +6,7 @@ int main()
 {
     std::string filename = "sample_speaker.txt";
     std::ifstream inFile(filename);
+    std::ofstream SPL("sample_speaker_spl.txt");
 
     TS_Parameters speaker1;
     speaker1.initialize_speaker(inFile);
@@ -24,6 +25,10 @@ int main()
     std::cout<<"Mms: "<<speaker1.get_Mms()<<std::endl;
     std::cout<<"Rms: "<<speaker1.get_Rms()<<std::endl;
     std::cout<<"Bl: "<<speaker1.get_Bl()<<std::endl;
+    std::cout<<"Volume of Box: "<<speaker1.get_Vb()<<std::endl;
+
+	std::vector<double> spl_values
+    speaker1.compute_transfer_function(spl_values);
     
     /*
      CORRECT OUTPUT:
