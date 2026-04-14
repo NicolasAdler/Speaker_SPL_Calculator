@@ -236,6 +236,17 @@ double TS_Parameters::get_Vb()
 {
 	return this->Vb;
 }
+
+void TS_Parameters::set_W(double _W)
+{
+	this->W = _W;
+}
+double TS_Parameters::get_W()
+{
+	return this->W;
+}
+
+
 // CONVERSION FUNCTIONS
 double TS_Parameters::convert_g_to_kg(double _value_in_grams)
 {
@@ -351,7 +362,12 @@ void TS_Parameters::initialize_speaker(std::ifstream& _file)
             {
             	this->set_Vb(value);
             	Vb_has_value = true;
-            }         
+            }   
+            else if(parameter_name =="W")
+            {
+            	this->set_W(value);
+            	W_has_value = true;
+            }      
             else
             {
                 std::cout<<"Parameter name is unrecognized\n";
@@ -453,6 +469,7 @@ void TS_Parameters::compute_transfer_function(std::vector<double>& _spl_values)
     }
 
     const double SPL_ref = 112.2 + 10 * std::log10(this->n0);
+    const double W_gain = 10.0 *std::log10(this->W);
     for(int i = 0; i < 20001; i++)
     {
         if(i < 20)
@@ -469,7 +486,7 @@ void TS_Parameters::compute_transfer_function(std::vector<double>& _spl_values)
             double Hf_bottom_1 = std::pow(sys_stiffness - Hf_top, 2);
             double Hf_bottom_2 = std::pow(freq_ratio / this->Qts, 2);
             double Hf = Hf_top / std::sqrt(Hf_bottom_1 + Hf_bottom_2);
-            _spl_values[i] = SPL_ref + 20 * std::log10(std::abs(Hf));
+            _spl_values[i] = (SPL_ref + 20 * std::log10(std::abs(Hf))) + W_gain;
         }
     }
 }
