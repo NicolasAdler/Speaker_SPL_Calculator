@@ -1,12 +1,24 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include "SPL_Calculator.h"
 
 int main()
 {
     std::string filename = "sample_speaker.txt";
     std::ifstream inFile(filename);
+
+    if(!inFile)
+    {
+    	std::cerr <<"Error: Could not find or open " <<filename <<std::endl;
+    	return 1;
+    }
     std::ofstream SPL("sample_speaker_spl.txt");
+
+    if(!SPL)
+    {
+    	std::cerr<<"Error: could not create output file\n";
+    }
 
     TS_Parameters speaker1;
     speaker1.initialize_speaker(inFile);
@@ -27,46 +39,18 @@ int main()
     std::cout<<"Bl: "<<speaker1.get_Bl()<<std::endl;
     std::cout<<"Volume of Box: "<<speaker1.get_Vb()<<std::endl;
 
-	std::vector<double> spl_values
+	std::vector<double> spl_values;
+	spl_values.resize(20001);
     speaker1.compute_transfer_function(spl_values);
     
-    /*
-     CORRECT OUTPUT:
-	Vas 5.4
-	fs 42.4
-	Qts 1.361
-	Qes 1.6
-	Qms 9.108
-	Xmax 3.6
-	Sd 219
-	Sensitivity 77.54
-	Re 0.75
-	n0 0.00025
-	Cms 0.08
-	Mms 175.75
-	Rms 5.14
-	Bl 4.68
-     
-     */
+    for (const auto& value : spl_values)
+    {
+        SPL << value << "\n";
+    }
+    SPL.close();
 
-	/*
-	Y or N.
-	TEST 1: Vas, DID IT PASS?: 			Y
-	TEST 2: fs, DID IT PASS?:  			Y
-	TEST 3: Qts, DID IT PASS?: 			Y
-	TEST 4: Qes, DID IT PASS?: 			Y
-	TEST 5: Qms, DID IT PASS?: 			Y
-	
-	TEST 5: Sd, DID IT PASS?:  			N
-	
-	TEST 6: Sensitivity, DID IT PASS?: 	Y	
-	TEST : n0, DID IT PASS?: 			
-	TEST : Cms, DID IT PASS?: 			
-	TEST : Mms, DID IT PASS?: 			
-	TEST : Rms, DID IT PASS?: 			
-	TEST : Bl, DID IT PASS?: 			
-
-	*/
-
+    std::cout<<"Success: Data written to smaple_speaker_spl.txt" <<std::endl;
+    
+    
     return 0;
 }

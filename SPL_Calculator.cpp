@@ -446,44 +446,31 @@ void TS_Parameters::solve()
 }
 void TS_Parameters::compute_transfer_function(std::vector<double>& _spl_values)
 {
-	if(n0 == 0)
-	{
-		std::cout<<"You must have n0 in order to be able to calculate the H(f).\n";
-		return;
-	}
-	const double SPL_ref = 112.2 + 10 * std::log10(this->n0);
-	int frequency;
-	double Hf = 0.0f;
-	double Hf_top = 0.0f;
-	double Hf_bottom_1 = 0.0f;
-	double Hf_bottom_2 = 0.0f;
+    if(n0 == 0) 
+    {
+        std::cout << "You must have n0 in order to be able to calculate the H(f).\n";
+        return;
+    }
 
-	double freq_ratio = 0.0f;
-	double sys_stiffness = 0.0f;
-	for(int i = 0; i < 20001; i++)
-	{
-		frequency = i;
-		if(frequency < 20)
-		{
-			_spl_values[frequency] = 0.0;
-		}
-		else
-		{
-			freq_ratio = frequency / this->fs;
-			sys_stiffness = (this->Vas / this->Vb) + 1.0;
-			
-			Hf_top = std::pow(freq_ratio, 2);
-			Hf_bottom_1 = std::pow(sys_stiffness - Hf_top, 2);
-			Hf_bottom_2 = std::pow(freq_ratio / this->Qts, 2);
-			Hf = Hf_top / std::sqrt(Hf_bottom_1 + Hf_bottom_2);
-			
-			// Hf_top = pow((frequency/this->fs),2);
-			// Hf_bottom_1 = pow(((this->Vas/this->Vb)+1-Hf_top),2);
-			// Hf_bottom_2 = pow(((frequency/this->fs)/this->Qts),2);
-			// Hf_bottom_3 = ((this->Vas/this->Vb)+1);
-			// Hf = Hf_top / sqrt(Hf_bottom_1 + Hf_bottom_2 * Hf_bottom_3);
-			_spl_values[frequency] = SPL_ref + 20 * log10(abs(Hf));
-		}
-	}
-	
+    const double SPL_ref = 112.2 + 10 * std::log10(this->n0);
+    for(int i = 0; i < 20001; i++)
+    {
+        if(i < 20)
+        {
+            _spl_values[i] = 0.0;
+        }
+        else
+        {
+            
+            double freq_ratio = i / this->fs;
+            double sys_stiffness = (this->Vas / this->Vb) + 1.0;
+            
+            double Hf_top = std::pow(freq_ratio, 2);
+            double Hf_bottom_1 = std::pow(sys_stiffness - Hf_top, 2);
+            double Hf_bottom_2 = std::pow(freq_ratio / this->Qts, 2);
+            double Hf = Hf_top / std::sqrt(Hf_bottom_1 + Hf_bottom_2);
+            _spl_values[i] = SPL_ref + 20 * std::log10(std::abs(Hf));
+        }
+    }
 }
+
