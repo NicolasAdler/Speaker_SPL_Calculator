@@ -6,7 +6,6 @@ make clean
 make all
 ./spl_calculator
 
-# --- Added gnuplot section ---
 gnuplot -p << EOF
     set title "Speaker SPL Transfer Function"
     set xlabel "Frequency (Hz)"

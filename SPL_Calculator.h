@@ -13,7 +13,7 @@ class TS_Parameters
     private:
 
     double Vas{0.0}, fs{0.0}, Qts{0.0}, Qes{0.0}, Qms{0.0}, Xmax{0.0}, Sd{0.0}, Sensitivity{0.0},
-    Mms{0.0}, Cms{0.0}, Kms{0.0}, Rms{0.0}, Re{0.0}, Res{0.0};
+    Mms{0.0}, Cms{0.0}, Kms{0.0}, Rms{0.0}, Re{0.0}, Res{0.0}, W{0.0};
 
     double n0{0}, Bl{0}, Vb{0};
 
@@ -24,7 +24,8 @@ class TS_Parameters
     Qes_has_value{false}, Qms_has_value{false}, Mms_has_value{false},
     Cms_has_value{false},  Kms_has_value{false}, Sd_has_value{false},
     Xmax_has_value{false}, Sensitivity_has_value{false}, 
-    Re_has_value{false}, Rms_has_value{false}, n0_has_value{false}, Bl_has_value{false}, Vb_has_value{false};
+    Re_has_value{false}, Rms_has_value{false}, n0_has_value{false}, Bl_has_value{false},
+    Vb_has_value{false}, W_has_value{false};
 
     public:
     TS_Parameters()
@@ -96,6 +97,9 @@ class TS_Parameters
 
     void set_Vb(double _Vb);
     double get_Vb();
+
+    void set_W(double _W);
+    double get_W();
 
     double convert_g_to_kg(double _value_in_grams);
     double convert_kg_to_g(double _value_in_kg);
