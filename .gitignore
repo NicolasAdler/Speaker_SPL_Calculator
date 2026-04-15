@@ -1,2 +1,7 @@
 *.o
 SPL_Calc
+equations.md
+no_Vas.txt
+sample_speaker_spl.txt
+sample_speaker_no_fs.txt
+SPL.sh
