@@ -5,7 +5,7 @@
 
 int main()
 {
-    std::string filename = "sample_speaker.txt";
+    std::string filename = "current_speaker.txt";
     std::ifstream inFile(filename);
 
     if(!inFile)
@@ -13,7 +13,7 @@ int main()
     	std::cerr <<"Error: Could not find or open " <<filename <<std::endl;
     	return 1;
     }
-    std::ofstream SPL("sample_speaker_spl.txt");
+    std::ofstream SPL("current_spl.txt");
 
     if(!SPL)
     {
@@ -49,7 +49,7 @@ int main()
     }
     SPL.close();
 
-    std::cout<<"Success: Data written to smaple_speaker_spl.txt" <<std::endl;
+    std::cout<<"Success: Data written to current_spl.txt" <<std::endl;
     
     
     return 0;
