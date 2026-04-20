@@ -9,7 +9,7 @@ units = {
     "Vas": "liters", "fs": "Hz", "Qts": "", "Qes": "", "Qms": "",
     "Xmax": "mm", "Sd": "cm²", "Sensitivity": "dB", "Re": "Ohms",
     "n0": "", "Cms": "mm/N", "Mms": "g", "Rms": "kg/s", "Bl": "T*m",
-    "Vb": "liters", "Power": "Watts"
+    "Box Volume": "liters", "Power": "Watts"
 }
 
 labels = list(units.keys())
