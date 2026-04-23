@@ -30,7 +30,7 @@ class TS_Parameters
     public:
     TS_Parameters()
     {
-    	spl_values.reserve(19981);
+    	spl_values.reserve(20001);
     }
     void set_Vas(double _Vas);
     void set_Vas(double _Sd, double _Cms);

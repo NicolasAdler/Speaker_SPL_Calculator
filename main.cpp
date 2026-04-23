@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	
     std::string filename = "current_speaker.txt";
     std::ifstream inFile(filename);
-
+	
     if(!inFile)
     {
     	std::cerr <<"Error: Could not find or open " <<filename <<std::endl;
@@ -26,6 +26,7 @@ int main(int argc, char* argv[])
     TS_Parameters speaker1;
     speaker1.initialize_speaker(inFile);
     speaker1.solve();
+    /*
     std::cout<<"Vas: "<<speaker1.get_Vas()<<std::endl;
     std::cout<<"fs: "<<speaker1.get_fs()<<std::endl;
     std::cout<<"Qts: "<<speaker1.get_Qts()<<std::endl;
@@ -42,6 +43,16 @@ int main(int argc, char* argv[])
     std::cout<<"Bl: "<<speaker1.get_Bl()<<std::endl;
     std::cout<<"Volume of Box: "<<speaker1.get_Vb()<<std::endl;
 
+	std::cout<<std::endl;
+	std::cout<<std::endl;
+	
+	TS_Parameters speaker2;
+	speaker2.set_fs(80.0);
+	speaker2.set_Mms(10.8);
+	speaker2.set_Cms_with_Mms_and_fs(speaker2.get_fs(), speaker2.get_Mms());
+	std::cout<<"Tallboy Cms: " << speaker2.get_Cms()<<std::endl;
+	*/	
+	
 	std::vector<double> spl_values;
 	spl_values.resize(20001);
     speaker1.compute_transfer_function(spl_values);
