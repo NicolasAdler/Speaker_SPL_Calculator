@@ -1,10 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
+
 #include "SPL_Calculator.h"
 
-int main()
+int main(int argc, char* argv[])
 {
+	
     std::string filename = "current_speaker.txt";
     std::ifstream inFile(filename);
 
