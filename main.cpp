@@ -7,9 +7,39 @@
 
 int main(int argc, char* argv[])
 {
+
+	std::string filename = "speaker_";
+
+	for(int i = 0; i < argc; i++)
+	{
+		std::string num_to_string = std::to_string(i);
+		filename += num_to_string;
+		filename += ".txt";
+
+		std::cout<< filename << std::endl;
+		//std::ifstream inFile();
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
+	/*
     std::string filename = "current_speaker.txt";
     std::ifstream inFile(filename);
+    
 
     if(!inFile)
     {
@@ -54,6 +84,6 @@ int main(int argc, char* argv[])
 
     std::cout<<"Success: Data written to current_spl.txt" <<std::endl;
     
-    
+    */
     return 0;
 }
