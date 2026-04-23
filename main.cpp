@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     std::cout<<"Xmax: "<<speaker1.get_Xmax()<<std::endl;
     std::cout<<"Sd: "<<speaker1.get_Sd()<<std::endl;
     std::cout<<"Sensitivity: "<<speaker1.get_Sensitivity()<<std::endl;
-   // std::cout<<"Re: "<<speaker1.get_Re()<<std::endl;
+    std::cout<<"Re: "<<speaker1.get_Re()<<std::endl;
     std::cout<<"n0: "<<speaker1.get_n0()<<std::endl;
     std::cout<<"Cms: "<<speaker1.get_Cms()<<std::endl;
     std::cout<<"Mms: "<<speaker1.get_Mms()<<std::endl;

@@ -6,6 +6,7 @@ Qms 9.108
 Xmax 3.6
 Sd 219
 Sensitivity 77.54
+Re 0.75
 n0 0.00036
 Cms 0.08
 Mms 175.76
@@ -13,3 +14,4 @@ Rms 5.14
 Bl 4.68
 Vb 4
 W 130
+
